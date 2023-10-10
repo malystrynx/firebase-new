@@ -2,17 +2,18 @@ import React from 'react';
 import './App.css';
 import { auth } from './firebase/init';
 import { createUserWithEmailAndPassword,
-signInWithEmailAndPassword, signOut,
+signInWithEmailAndPassword, signOut, onAuthStateChanged
 } from "firebase/auth";
 
 
 function App() {
-  const [user, setUser] = React.useState({})
-  React.useEffect(auth, (user) => {
-console.log(user);
-if (user){
-  setUser(user)
-}
+  React.useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (user) {
+        setUser(user);
+      }
+    });
   }, []);
   function register(){
     console.log('register');
